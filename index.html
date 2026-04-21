@@ -8,57 +8,138 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Montserrat',sans-serif;background:#1a0f0a;color:#f0f0f0;display:flex;height:100vh;overflow:hidden;}
+body{font-family:'Montserrat',sans-serif;background:#f5f0eb;color:#1a0f0a;display:flex;height:100vh;overflow:hidden;}
 
-#panel{width:300px;min-width:300px;background:#241208;padding:16px 14px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+/* ── PANEL ── */
+#panel{
+  width:320px;min-width:320px;
+  background:#fff;
+  border-right:1px solid #e8ddd5;
+  padding:0;
+  overflow-y:auto;
+  display:flex;flex-direction:column;
+  box-shadow:2px 0 20px rgba(0,0,0,0.06);
+}
+.panel-header{
+  background:#fff;
+  padding:22px 20px 16px;
+  border-bottom:1px solid #f0e8e0;
+  position:sticky;top:0;z-index:10;
+}
+.app-title{font-size:13px;font-weight:900;color:#D4784A;letter-spacing:3px;}
+.app-sub{font-size:9px;color:#b09080;letter-spacing:1px;margin-top:2px;}
+.panel-body{padding:0;display:flex;flex-direction:column;}
+
+.sec-block{padding:18px 20px;border-bottom:1px solid #f0e8e0;}
+.sec{font-size:8px;font-weight:800;color:#D4784A;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.sec::after{content:'';flex:1;height:1px;background:#f0e8e0;}
+.lbl{font-size:9px;color:#9a8070;font-weight:600;display:block;margin-bottom:4px;letter-spacing:.5px;}
+input[type=text]{
+  width:100%;
+  background:#faf6f3;
+  border:1.5px solid #e8ddd5;
+  border-radius:8px;
+  padding:9px 12px;
+  color:#1a0f0a;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  font-weight:500;
+  outline:none;
+  transition:.15s;
+}
+input[type=text]:focus{border-color:#D4784A;background:#fff;}
+input[type=range]{width:100%;accent-color:#D4784A;cursor:pointer;height:3px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mb{margin-bottom:10px;}
+.sep{display:none;}
+
+.foto-drop{
+  border:2px dashed #e0d0c4;
+  border-radius:10px;
+  padding:16px;
+  text-align:center;
+  cursor:pointer;
+  font-size:10px;
+  color:#b09080;
+  transition:.2s;
+  background:#faf6f3;
+}
+.foto-drop:hover{border-color:#D4784A;color:#D4784A;background:#fff8f5;}
+.foto-drop.has{border-color:#D4784A;color:#D4784A;background:#fff8f5;}
+#foto-input{display:none;}
+
+.logo-tabs{display:flex;border-radius:8px;overflow:hidden;border:1.5px solid #e8ddd5;background:#faf6f3;}
+.logo-tab{flex:1;text-align:center;padding:8px 2px;font-size:9px;font-weight:700;cursor:pointer;color:#b09080;transition:.2s;letter-spacing:.5px;}
+.logo-tab.active{background:#D4784A;color:#fff;}
+
+.check-row{display:flex;align-items:center;gap:8px;font-size:10px;color:#7a6050;cursor:pointer;font-weight:500;}
+.check-row input{accent-color:#D4784A;}
+
+.oval-item{display:flex;align-items:center;gap:6px;margin-bottom:8px;}
+.oval-item input{flex:1;background:#faf6f3;border:1.5px solid #e8ddd5;border-radius:8px;padding:9px 12px;color:#1a0f0a;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;outline:none;transition:.15s;}
+.oval-item input:focus{border-color:#D4784A;background:#fff;}
+.btn-x{background:#fff0ee;border:1px solid #ffd5cc;color:#D4784A;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:14px;flex-shrink:0;line-height:1;font-weight:700;}
+.btn-x:hover{background:#ffe0d8;}
+.btn-add{
+  width:100%;
+  background:#fff;
+  border:1.5px dashed #e0c8b8;
+  color:#D4784A;
+  border-radius:8px;
+  padding:9px;
+  font-size:10px;
+  font-weight:700;
+  cursor:pointer;
+  font-family:'Montserrat',sans-serif;
+  margin-bottom:6px;
+  letter-spacing:.5px;
+  transition:.2s;
+}
+.btn-add:hover{background:#fff8f5;border-color:#D4784A;}
+
+.panel-footer{padding:18px 20px;background:#fff;border-top:1px solid #f0e8e0;position:sticky;bottom:0;}
+.btn-gen{
+  background:linear-gradient(135deg,#D4784A,#c06030);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:14px;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+  width:100%;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  box-shadow:0 4px 16px rgba(212,120,74,0.35);
+  transition:.2s;
+}
+.btn-gen:hover{box-shadow:0 6px 20px rgba(212,120,74,0.5);transform:translateY(-1px);}
+#status{font-size:10px;text-align:center;color:#b09080;min-height:14px;margin-bottom:8px;font-weight:500;}
+
+/* ── PREVIEW ── */
+#preview-area{
+  flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:#ede6df;
+  padding:20px;gap:12px;
+  overflow:hidden;
+  background-image:radial-gradient(circle, #e0d5cc 1px, transparent 1px);
+  background-size:24px 24px;
+}
+.zoom-bar{display:flex;align-items:center;gap:10px;background:#fff;border-radius:8px;padding:6px 12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+.zoom-bar button{background:none;color:#D4784A;border:none;width:24px;height:24px;font-size:16px;cursor:pointer;font-weight:700;line-height:1;}
+.zoom-bar span{font-size:10px;color:#9a8070;font-weight:700;min-width:35px;text-align:center;}
+.hint{font-size:9px;color:#b0a090;font-weight:500;letter-spacing:.5px;}
+#preview-wrap{position:relative;border-radius:4px;overflow:hidden;box-shadow:0 16px 60px rgba(0,0,0,0.25);}
 
 @media(max-width:700px){
   body{flex-direction:column;height:auto;overflow:auto;}
-  #panel{width:100%;min-width:unset;max-height:none;order:2;}
-  #preview-area{order:1;padding:10px;min-height:60vw;}
+  #panel{width:100%;min-width:unset;order:2;}
+  #preview-area{order:1;padding:10px;min-height:60vw;background-image:none;}
   .zoom-bar{display:none;}
   .hint{display:none;}
 }
-.app-title{font-size:15px;font-weight:900;color:#C8A97A;letter-spacing:2px;text-align:center;}
-.app-sub{font-size:9px;color:#555;text-align:center;}
-.sep{height:1px;background:#3d1a08;flex-shrink:0;}
-.sec{font-size:9px;font-weight:700;color:#C8A97A;letter-spacing:3px;margin-bottom:6px;}
-.lbl{font-size:9px;color:#666;display:block;margin-bottom:3px;}
-input[type=text]{width:100%;background:#3d1a08;border:none;border-radius:5px;padding:8px 10px;color:#fff;font-family:'Montserrat',sans-serif;font-size:11px;outline:none;}
-input[type=text]:focus{background:#5a2a0a;}
-input[type=range]{width:100%;accent-color:#C8A97A;cursor:pointer;}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.mb{margin-bottom:7px;}
-
-.foto-drop{border:2px dashed #3d1a08;border-radius:8px;padding:12px;text-align:center;cursor:pointer;font-size:10px;color:#555;transition:.2s;}
-.foto-drop:hover{border-color:#C8A97A;color:#C8A97A;}
-.foto-drop.has{border-color:#4CAF50;color:#4CAF50;}
-#foto-input{display:none;}
-
-.logo-tabs{display:flex;border-radius:6px;overflow:hidden;border:1px solid #3d1a08;}
-.logo-tab{flex:1;text-align:center;padding:7px 2px;font-size:10px;cursor:pointer;background:#241208;color:#666;transition:.2s;}
-.logo-tab.active{background:#3d1a08;color:#C8A97A;}
-
-.check-row{display:flex;align-items:center;gap:7px;font-size:10px;color:#888;cursor:pointer;}
-.check-row input{accent-color:#C8A97A;}
-
-.oval-item{display:flex;align-items:center;gap:5px;margin-bottom:6px;}
-.oval-item input{flex:1;background:#3d1a08;border:none;border-radius:5px;padding:8px 10px;color:#fff;font-family:'Montserrat',sans-serif;font-size:11px;outline:none;}
-.oval-item input:focus{background:#5a2a0a;}
-.btn-x{background:#3a1a1a;border:none;color:#f44336;border-radius:5px;width:26px;height:26px;cursor:pointer;font-size:16px;flex-shrink:0;line-height:1;}
-.btn-add{width:100%;background:#3d1a08;border:1px dashed #C8A97A;color:#C8A97A;border-radius:5px;padding:8px;font-size:10px;cursor:pointer;font-family:'Montserrat',sans-serif;margin-bottom:5px;}
-.btn-add:hover{background:#5a2a0a;}
-
-.btn-gen{background:#D4784A;color:#fff;border:none;border-radius:8px;padding:13px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;cursor:pointer;width:100%;letter-spacing:1px;}
-.btn-gen:hover{background:#c06030;}
-#status{font-size:10px;text-align:center;color:#888;min-height:14px;}
-
-#preview-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#120805;padding:16px;gap:8px;overflow:hidden;}
-.zoom-bar{display:flex;align-items:center;gap:8px;}
-.zoom-bar button{background:#3a1a08;color:#C8A97A;border:none;border-radius:5px;width:28px;height:28px;font-size:15px;cursor:pointer;}
-.zoom-bar span{font-size:10px;color:#666;min-width:35px;text-align:center;}
-.hint{font-size:9px;color:#444;}
-#preview-wrap{position:relative;}
 
 #story{width:1080px;height:1920px;position:relative;overflow:hidden;font-family:'Montserrat',Arial,sans-serif;background:#222;transform-origin:top left;user-select:none;}
 #bg-wrap{position:absolute;inset:0;overflow:hidden;z-index:1;}
@@ -88,67 +169,69 @@ input[type=range]{width:100%;accent-color:#C8A97A;cursor:pointer;}
 <body>
 
 <div id="panel">
-  <div><div class="app-title">PARTAGE STORY</div><div class="app-sub">stories para Instagram · 1080×1920</div></div>
-  <div class="sep"></div>
-
-  <div>
-    <div class="sec">📍 DESTINO</div>
-    <div class="mb"><label class="lbl">Destino principal *</label><input type="text" id="dest1" placeholder="USHUAIA"></div>
-    <div class="mb"><label class="lbl">Tamaño <span id="dest1-size-val">148px</span></label><input type="range" id="dest1-size" min="40" max="200" value="148"></div>
-    <div class="mb"><label class="lbl">Segundo destino (opcional)</label><input type="text" id="dest2" placeholder="+ EL CALAFATE"></div>
-    <div><label class="lbl">Badge naranja</label><input type="text" id="badge" placeholder="VIAJE GRUPAL"></div>
-    <div class="mb"><label class="lbl">Tamaño badge <span id="badge-size-val">28px</span></label><input type="range" id="badge-size" min="14" max="60" value="28"></div>
-    <div style="margin-top:6px"><label class="lbl">Tamaño texto segundo destino <span id="dest2-size-val">100px</span></label><input type="range" id="dest2-size" min="30" max="120" value="100"></div>
+  <div class="panel-header">
+    <div class="app-title">PARTAGE STORY MAKER</div>
+    <div class="app-sub">STORIES PARA INSTAGRAM · 1080×1920</div>
   </div>
-  <div class="sep"></div>
+  <div class="panel-body">
 
-  <div>
-    <div class="sec">📅 FECHA</div>
-    <div class="row2 mb">
-      <div><label class="lbl">Día</label><input type="text" id="dia" placeholder="17"></div>
-      <div><label class="lbl">Mes</label><input type="text" id="mes" placeholder="Octubre"></div>
+    <div class="sec-block">
+      <div class="sec">Destino</div>
+      <div class="mb"><label class="lbl">Destino principal</label><input type="text" id="dest1" placeholder="USHUAIA"></div>
+      <div class="mb"><label class="lbl">Tamaño <span id="dest1-size-val">148px</span></label><input type="range" id="dest1-size" min="40" max="200" value="148"></div>
+      <div class="mb"><label class="lbl">Segundo destino (opcional)</label><input type="text" id="dest2" placeholder="+ EL CALAFATE"></div>
+      <div class="mb"><label class="lbl">Badge naranja</label><input type="text" id="badge" placeholder="VIAJE GRUPAL"></div>
+      <div class="mb"><label class="lbl">Tamaño badge <span id="badge-size-val">28px</span></label><input type="range" id="badge-size" min="14" max="60" value="28"></div>
+      <div><label class="lbl">Tamaño segundo destino <span id="dest2-size-val">100px</span></label><input type="range" id="dest2-size" min="30" max="120" value="100"></div>
     </div>
-    <div><label class="lbl">Ciudad de salida</label><input type="text" id="salida" placeholder="Rosario"></div>
-    <div class="mb"><label class="lbl">Tamaño fecha <span id="fecha-size-val">66px</span></label><input type="range" id="fecha-size" min="30" max="100" value="66"></div>
-    <div class="mb"><label class="lbl">Tamaño ciudad <span id="salida-size-val">36px</span></label><input type="range" id="salida-size" min="16" max="60" value="36"></div>
-  </div>
-  <div class="sep"></div>
 
-  <div>
-    <div class="sec">🖼️ FOTO DE FONDO</div>
-    <div class="foto-drop" id="foto-drop"><div id="foto-label">Clic o arrastrá la foto<br><span style="font-size:9px;color:#444">.jpg · .jpeg · .png</span></div></div>
-    <input id="foto-input" type="file" accept="image/*">
-    <div style="margin-top:10px;display:flex;flex-direction:column;gap:6px;">
-      <div><label class="lbl">Zoom foto <span id="zoom-foto-val">100%</span></label><input type="range" id="foto-zoom" min="100" max="300" value="100"></div>
-      <div><label class="lbl">Posición horizontal</label><input type="range" id="foto-x" min="0" max="100" value="50"></div>
-      <div><label class="lbl">Posición vertical</label><input type="range" id="foto-y" min="0" max="100" value="45"></div>
+    <div class="sec-block">
+      <div class="sec">Fecha y salida</div>
+      <div class="row2 mb">
+        <div><label class="lbl">Día</label><input type="text" id="dia" placeholder="17"></div>
+        <div><label class="lbl">Mes</label><input type="text" id="mes" placeholder="Octubre"></div>
+      </div>
+      <div class="mb"><label class="lbl">Ciudad de salida</label><input type="text" id="salida" placeholder="Rosario"></div>
+      <div class="mb"><label class="lbl">Tamaño fecha <span id="fecha-size-val">66px</span></label><input type="range" id="fecha-size" min="30" max="100" value="66"></div>
+      <div><label class="lbl">Tamaño ciudad <span id="salida-size-val">36px</span></label><input type="range" id="salida-size" min="16" max="60" value="36"></div>
     </div>
-  </div>
-  <div class="sep"></div>
 
-  <div>
-    <div class="sec">⭕ ÓVALOS Y TEXTOS</div>
-    <div id="oval-list"></div>
-    <button class="btn-add" onclick="addOval()">+ Agregar óvalo con info</button>
-    <button class="btn-add" onclick="addText()">+ Agregar texto libre</button>
-    <div style="margin-top:8px"><label class="lbl">Tamaño texto óvalos <span id="oval-size-val">32px</span></label><input type="range" id="oval-size" min="14" max="60" value="32"></div>
-  </div>
-  <div class="sep"></div>
-
-  <div>
-    <div class="sec">✦ OPCIONALES</div>
-    <div class="mb"><label class="lbl">Logo</label>
-      <div class="logo-tabs">
-        <div class="logo-tab active" id="tab-color" onclick="setLogo('color')">🎨 Color</div>
-        <div class="logo-tab" id="tab-blanco" onclick="setLogo('blanco')">⚪ Blanco</div>
-        <div class="logo-tab" id="tab-oculto" onclick="setLogo('oculto')">✕ Sin logo</div>
+    <div class="sec-block">
+      <div class="sec">Foto de fondo</div>
+      <div class="foto-drop" id="foto-drop"><div id="foto-label">Clic o arrastrá la foto<br><span style="font-size:9px;opacity:.7">.jpg · .jpeg · .png</span></div></div>
+      <input id="foto-input" type="file" accept="image/*">
+      <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
+        <div><label class="lbl">Zoom foto <span id="zoom-foto-val">100%</span></label><input type="range" id="foto-zoom" min="100" max="300" value="100"></div>
+        <div><label class="lbl">Posición horizontal</label><input type="range" id="foto-x" min="0" max="100" value="50"></div>
+        <div><label class="lbl">Posición vertical</label><input type="range" id="foto-y" min="0" max="100" value="45"></div>
       </div>
     </div>
-    <label class="check-row"><input type="checkbox" id="show-cupos" checked onchange="updateFixed()"> Mostrar "Cupos limitados"</label>
-  </div>
 
-  <div id="status"></div>
-  <button class="btn-gen" onclick="genPNG()">✦ GENERAR Y DESCARGAR</button>
+    <div class="sec-block">
+      <div class="sec">Óvalos y textos</div>
+      <div id="oval-list"></div>
+      <button class="btn-add" onclick="addOval()">+ Agregar óvalo con info</button>
+      <button class="btn-add" onclick="addText()">+ Agregar texto libre</button>
+      <div style="margin-top:4px"><label class="lbl">Tamaño texto óvalos <span id="oval-size-val">32px</span></label><input type="range" id="oval-size" min="14" max="60" value="32"></div>
+    </div>
+
+    <div class="sec-block">
+      <div class="sec">Opcionales</div>
+      <div class="mb"><label class="lbl">Logo</label>
+        <div class="logo-tabs">
+          <div class="logo-tab active" id="tab-color" onclick="setLogo('color')">Color</div>
+          <div class="logo-tab" id="tab-blanco" onclick="setLogo('blanco')">Blanco</div>
+          <div class="logo-tab" id="tab-oculto" onclick="setLogo('oculto')">Sin logo</div>
+        </div>
+      </div>
+      <label class="check-row"><input type="checkbox" id="show-cupos" checked onchange="updateFixed()"> Mostrar "Cupos limitados"</label>
+    </div>
+
+  </div>
+  <div class="panel-footer">
+    <div id="status"></div>
+    <button class="btn-gen" onclick="genPNG()">Generar y descargar</button>
+  </div>
 </div>
 
 <div id="preview-area">
