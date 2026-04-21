@@ -250,46 +250,56 @@ function updateFoto(){
 }
 ['foto-zoom','foto-x','foto-y'].forEach(id => document.getElementById(id).addEventListener('input', updateFoto));
 
-// ── Drag ──
-function makeDraggable(el){
-  el.addEventListener('mousedown', e => {
-    e.preventDefault();
-    // resolve current position in story-space
-    const sr = document.getElementById('story').getBoundingClientRect();
-    const er = el.getBoundingClientRect();
-    const curLeft = (er.left - sr.left) / canvasScale;
-    const curTop  = (er.top  - sr.top)  / canvasScale;
-    el.style.transform = '';
-    el.style.left  = curLeft+'px';
-    el.style.top   = curTop+'px';
-    el.style.right = '';
-    dragging = {el, ox:e.clientX, oy:e.clientY, sl:curLeft, st:curTop};
-    el.classList.add('sel');
-  });
+// ── Drag (mouse + touch) ──
+function getClientXY(e){
+  if(e.touches) return {x: e.touches[0].clientX, y: e.touches[0].clientY};
+  return {x: e.clientX, y: e.clientY};
 }
-const SNAP_DIST = 18; // px en espacio story
-document.addEventListener('mousemove', e => {
+function startDrag(el, e){
+  e.preventDefault();
+  const sr = document.getElementById('story').getBoundingClientRect();
+  const er = el.getBoundingClientRect();
+  const curLeft = (er.left - sr.left) / canvasScale;
+  const curTop  = (er.top  - sr.top)  / canvasScale;
+  el.style.transform = '';
+  el.style.left  = curLeft+'px';
+  el.style.top   = curTop+'px';
+  el.style.right = '';
+  const {x,y} = getClientXY(e);
+  dragging = {el, ox:x, oy:y, sl:curLeft, st:curTop};
+  el.classList.add('sel');
+}
+function moveDrag(e){
   if(!dragging) return;
-  const dx = (e.clientX - dragging.ox) / canvasScale;
-  const dy = (e.clientY - dragging.oy) / canvasScale;
+  const {x,y} = getClientXY(e);
+  const dx = (x - dragging.ox) / canvasScale;
+  const dy = (y - dragging.oy) / canvasScale;
   let newLeft = Math.max(0, dragging.sl+dx);
   const newTop  = Math.max(0, dragging.st+dy);
-  // detectar centro horizontal: centro del elemento cerca de x=540
   const elW = dragging.el.offsetWidth;
   const elCenter = newLeft + elW/2;
   const vLine = document.querySelector('#guides div:nth-child(1)');
-  if(Math.abs(elCenter - 540) < SNAP_DIST){
-    newLeft = 540 - elW/2; // snap
+  if(Math.abs(elCenter - 540) < 18){
+    newLeft = 540 - elW/2;
     if(vLine) vLine.style.borderColor = 'rgba(212,120,74,0.9)';
   } else {
     if(vLine) vLine.style.borderColor = 'rgba(200,169,122,0.5)';
   }
   dragging.el.style.left = newLeft+'px';
   dragging.el.style.top  = newTop+'px';
-});
-document.addEventListener('mouseup', () => {
+}
+function endDrag(){
   if(dragging){ dragging.el.classList.remove('sel'); dragging=null; }
-});
+}
+function makeDraggable(el){
+  el.addEventListener('mousedown', e => startDrag(el, e));
+  el.addEventListener('touchstart', e => startDrag(el, e), {passive:false});
+}
+const SNAP_DIST = 18;
+document.addEventListener('mousemove', moveDrag);
+document.addEventListener('touchmove', moveDrag, {passive:false});
+document.addEventListener('mouseup', endDrag);
+document.addEventListener('touchend', endDrag);
 
 // ── Crear elemento fijo ──
 function mkEl(cls, html, left, top, extraStyle){
